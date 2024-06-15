@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>การประเมินความเสี่ยงต่อการพลัดตกหกล้ม (Morse)</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+    h1, h2 {
+        text-align: center;
+    }
+    label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .result {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>การประเมินความเสี่ยงต่อการพลัดตกหกล้ม (Morse)</h1>
+    
+    <label for="historyOfFalling">1. ประวัติการพลัดตกหกล้ม: มีการล้มระหว่างรักษาตัวในรพ.หรือที่บ้าน 3 เดือนที่ผ่านมา</label>
+    <select id="historyOfFalling">
+        <option value="0">ไม่มี (0 คะแนน)</option>
+        <option value="25">มี (25 คะแนน)</option>
+    </select>
+    
+    <label for="secondaryDiagnosis">2. มีภาวะร่วมอื่น (โรคร่วม)หรือได้รับการวินิจฉัยโรคมากกว่า 1 รายการ:</label>
+    <select id="secondaryDiagnosis">
+        <option value="0">ไม่มี (0 คะแนน)</option>
+        <option value="15">มี (15 คะแนน)</option>
+    </select>
+    
+    <label for="ambulatoryAid">3. อุปกรณ์ช่วยเดิน:</label>
+    <select id="ambulatoryAid">
+        <option value="0">เดินได้เองไม่ใช้อุปกรณ์ช่วย /ใช้รถเข็นนั่ง/ นอนตลอดไม่ลุกจากเตียง/มีคนช่วย (0 คะแนน)</option>
+        <option value="15">ใช้ไม้เท้า หรืออุปกรณ์ช่วยอื่นๆ ในการเดิน(15 คะแนน)</option>
+        <option value="30">เดินไปตามการยึดเกาะตามเตียง โต๊ะ เก้าอี้ (30 คะแนน)</option>
+    </select>
+    
+    <label for="ivTherapy">4. การให้สารละลายทางหลอดเลือด IV Fluid:</label>
+    <select id="ivTherapy">
+        <option value="0">ไม่มี (0 คะแนน)</option>
+        <option value="20">มี (20 คะแนน)</option>
+    </select>
+    
+    <label for="gait">5. ลักษณะการเดิน:</label>
+    <select id="gait">
+        <option value="0">ปกติ (0 คะแนน)</option>
+        <option value="10">อ่อนแรง (10 คะแนน)</option>
+        <option value="20">ใช้วิธีทิ้งน้ำหนักไปด้านหนึ่ง (20 คะแนน)</option>
+    </select>
+    
+    <label for="mentalStatus">6. การรับรู้:</label>
+    <select id="mentalStatus">
+        <option value="0">ปกติ (0 คะแนน)</option>
+        <option value="15">ไม่เข้าใจความเสี่ยง (15 คะแนน)</option>
+    </select>
+    
+    <button onclick="calculateRisk()">รวมคะแนน</button>
+    
+    <div class="result" id="result">
+        <h2>ผลการประเมิน</h2>
+        <p id="totalScore"></p>
+        <p id="riskLevel"></p>
+    </div>
+</div>
+
+<script>
+function calculateRisk() {
+    var historyOfFalling = parseInt(document.getElementById('historyOfFalling').value);
+    var secondaryDiagnosis = parseInt(document.getElementById('secondaryDiagnosis').value);
+    var ambulatoryAid = parseInt(document.getElementById('ambulatoryAid').value);
+    var ivTherapy = parseInt(document.getElementById('ivTherapy').value);
+    var gait = parseInt(document.getElementById('gait').value);
+    var mentalStatus = parseInt(document.getElementById('mentalStatus').value);
+    
+    var totalScore = historyOfFalling + secondaryDiagnosis + ambulatoryAid + ivTherapy + gait + mentalStatus;
+    
+    var riskLevel = '';
+    if (totalScore < 25) {
+        riskLevel = 'Low risk (ความเสี่ยงต่ำ)';
+    } else if (totalScore >= 25 && totalScore <= 45) {
+        riskLevel = 'Moderate risk (ความเสี่ยงปานกลาง)';
+    } else if (totalScore > 45) {
+        riskLevel = 'High risk (ความเสี่ยงสูง)';
+    }
+    
+    document.getElementById('totalScore').innerText = 'คะแนนรวม: ' + totalScore + ' คะแนน';
+    document.getElementById('riskLevel').innerText = 'ระดับความเสี่ยง: ' + riskLevel;
+}
+</script>
+
+</body>
+</html>
